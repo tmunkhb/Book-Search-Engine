@@ -38,24 +38,24 @@ const resolvers = {
         },
         saveBook: async (parent, { input }, context) => {
             if (context.user) {
-                const updatedSavedBook = await User.findByIdAndUpdate(
+                const updatedUser = await User.findByIdAndUpdate(
                     { _id: context.user._id },
                     { $addToSet: { savedBooks: input } },
                     { new: true }
                 )
-                return updatedSavedBook;
+                return updatedUser;
             }
 
             throw new AuthenticationError('You need to be logged in!')
         },
         removeBook: async (parent, args, context) => {
             if (context.user) {
-                const updatedDeletedBook = await User.findByIdAndUpdate(
+                const updatedUser = await User.findByIdAndUpdate(
                     { _id: context.user._id },
                     { $pull: { savedBooks: {bookId: args.bookId } }},
                     { new: true }
                 );
-                return updatedDeletedBook;
+                return updatedUser;
             }
         }
     }
